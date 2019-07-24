@@ -121,7 +121,7 @@ def callback_menu(call):
 def get_user_info(message):
     try:
         logger.info(message.chat)
-        username = message.from_user.first_name + message.from_user.last_name if message.from_user.first_name != message.from_user.last_name else message.from_user.first_name
+        username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
         if message.from_user.username:
             msg_id = bot.send_message(message.chat.id,
                                       "亲爱的❤️{}  ❤️你好\n你的 Chat_Id = {}\nUsername是 {} \n  5秒后自动删除！".format(username,
@@ -220,7 +220,7 @@ def execution_lottery(message):
         l = f.read()
         if l.find('%s' % un) == -1:
             msg_id = bot.reply_to(message, '您没有权限哦').message_id
-            timer = threading.Timer(5, bot.delete_message, (message.chat.id, msg_id))
+            timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
             timer.start()
         else:
             code, r = join.get_lottery()
@@ -371,30 +371,37 @@ def search_last_sign_time(chat_id):
 @bot.message_handler(commands=['sign'])
 def user_sign(message):
     logger.info(message.chat)
-    username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
-    chat_id = message.from_user.id
-    t = str(datetime.datetime.today()).split(' ')[0]
-    t1 = search_last_sign_time(chat_id)
-    if t1 and t == str(t1).split(' ')[0]:
-        msg_id = bot.reply_to(message, '今日已签到,明天再来！10秒自毁以启动').message_id
-        timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
-        timer.start()
-    else:
-        insert_sign(username, chat_id)
-        msg_id = bot.reply_to(message, '亲爱的 {} 恭喜你签到成功! 20秒自毁以启动'.format(username)).message_id
-        timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-        timer.start()
+    try:
+        username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
+        chat_id = message.from_user.id
+        t = str(datetime.datetime.today()).split(' ')[0]
+        t1 = search_last_sign_time(chat_id)
+        if t1 and t == str(t1).split(' ')[0]:
+            msg_id = bot.reply_to(message, '今日已签到,签到时间为:{} 请明天再来！20秒自毁以启动'.format(t1)).message_id
+            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+            timer.start()
+        else:
+            insert_sign(username, chat_id)
+            msg_id = bot.reply_to(message, '亲爱的 {} 恭喜你签到成功! 20秒自毁以启动'.format(username)).message_id
+            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+            timer.start()
+    except Exception as e:
+        logger.error(e)
 
 
 @bot.message_handler(commands=['mystats'])
 def user_status(message):
-    logger.info(message.chat)
-    username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
-    chat_id = message.from_user.id
-    num = search_signs(chat_id)
-    msg_id = bot.reply_to(message, '{}:您总共签到:{} 次，很棒棒额，请再接再厉，20秒自毁以启动'.format(username, num)).message_id
-    timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-    timer.start()
+    try:
+        logger.info(message.chat)
+        username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
+        chat_id = message.from_user.id
+        num = search_signs(chat_id)
+        msg_id = bot.reply_to(message, '{}:您总共签到:{} 次，很棒棒额，请再接再厉，20秒自毁以启动'.format(username, num)).message_id
+        timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
+    except Exception as e:
+        logger.error(e)
+
 
 def get_news():
     res = r.get(URL['news_list'])
