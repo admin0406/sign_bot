@@ -745,3 +745,147 @@ Traceback (most recent call last):
   File "/usr/local/python3/lib/python3.6/random.py", line 318, in sample
     raise ValueError("Sample larger than population or is negative")
 ValueError: Sample larger than population or is negative
+2019-07-26 11:08:24,523 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 274, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 258, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:08:24,523 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:08:28,895 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 274, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 258, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:08:28,895 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:08:33,998 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 276, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:08:33,998 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:08:40,639 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 276, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:08:40,639 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:08:47,241 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 276, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:08:47,242 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:08:59,847 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 276, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:08:59,847 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:09:24,452 (util.py:65 PollingThread) ERROR - TeleBot: "ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:\n[b\'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}\']',)
+Traceback (most recent call last):
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/util.py", line 59, in run
+    task(*args, **kwargs)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 276, in __retrieve_updates
+    updates = self.get_updates(offset=(self.last_update_id + 1), timeout=timeout)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/__init__.py", line 246, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 180, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 56, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/usr/local/python3/lib/python3.6/site-packages/telebot/apihelper.py", line 75, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']
+"
+2019-07-26 11:09:24,452 (__init__.py:417 MainThread) ERROR - TeleBot: "A request to the Telegram API was unsuccessful. The server returned HTTP 409 Conflict. Response body:
+[b'{"ok":false,"error_code":409,"description":"Conflict: terminated by other getUpdates request; make sure that only one bot instance is running"}']"
+2019-07-26 11:10:10,982 -- telegram_bot.log -- main.py -- 314 -- INFO -- {'type': 'private', 'last_name': 'bibo', 'first_name': 'bibo', 'username': 'bibo_dear', 'id': 631099108, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-26 11:10:15,397 -- telegram_bot.log -- main.py -- 336 -- INFO -- {'type': 'private', 'last_name': 'bibo', 'first_name': 'bibo', 'username': 'bibo_dear', 'id': 631099108, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-26 11:47:30,799 -- telegram_bot.log -- main.py -- 46 -- INFO -- [<telebot.types.User object at 0x7fd13836afd0>]
+2019-07-26 11:47:31,305 -- telegram_bot.log -- main.py -- 63 -- ERROR -- 'list' object has no attribute 'id'
+2019-07-26 11:47:49,569 -- telegram_bot.log -- main.py -- 46 -- INFO -- [<telebot.types.User object at 0x7fd13836a320>]
+2019-07-26 11:47:51,101 -- telegram_bot.log -- main.py -- 63 -- ERROR -- 'list' object has no attribute 'id'
+2019-07-26 11:48:35,563 -- telegram_bot.log -- main.py -- 314 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': 'software_tester', 'id': -1001406694070, 'title': '软件测试 test QA', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}

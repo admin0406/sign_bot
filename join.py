@@ -34,8 +34,8 @@ def get_lottery():
     for count, line in enumerate(open("list", 'r')):
         pass
     count += 1
-    if count == '0':
-        return 0, 'None'
+    if count == 0:
+        return 0, '还没人参加抽奖，不能开奖额'
     else:
         with open('list') as f:
             l = f.read().splitlines()

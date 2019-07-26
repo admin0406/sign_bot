@@ -10,6 +10,7 @@ import requests
 import time
 import join, re
 import os
+from data_comming import *
 
 requests.adapters.DEFAULT_RETRIES = 5
 r = requests.session()
@@ -18,7 +19,6 @@ bot = telebot.TeleBot(token=API_TOKEN)
 logger = Logger().logger
 
 PATH = os.getcwd()
-
 
 @bot.message_handler(commands=['start'])
 def handle_start(message):
@@ -41,12 +41,28 @@ def handle_start(message):
 # 进群欢迎信息
 @bot.message_handler(content_types=['new_chat_members', 'left_chat_member'])
 def say_welcom(message):
-    if message.new_chat_members:
-        logger.info(message.new_chat_members)
-        names = message.new_chat_members[0]
-        msg_id = bot.send_message(message.chat.id, '欢迎 {} 加入群组🌺 کارب عزیز  🌺'.format(names.first_name)).message_id
-        timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
-        timer.start()
+    try:
+        if message.new_chat_members:
+            logger.info(message.new_chat_members)
+            msg_id = bot.send_message(message.chat.id,
+                                      "💋聪明`机智`能干`活泼`又机灵的小霸霸\n代表本群所有人热烈欢迎新成员: {} 加入大家庭\n🌺 کارب عزیز  🌺\n"
+                                      "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面".format(
+                                          message.new_chat_members[0].first_name)).message_id
+            save_text_to_sql(nick_name=message.new_chat_members[0].first_name, chat_id=message.new_chat_members.id, new_chat_member='1',
+                             left_chat_member='0', other='0')
+            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+            timer.start()
+
+        else:
+
+            save_text_to_sql(nick_name=message.left_chat_member.first_name, chat_id=message.left_chat_member.id, new_chat_member='0',
+                             left_chat_member='1', other='0')
+            msg_id = bot.send_message(message.chat.id,
+                                      '本群精英:{} 离开了我们团队，一路走好，恭喜发财！'.format(message.left_chat_member.first_name)).message_id
+            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+            timer.start()
+    except Exception as e:
+        logger.error(e)
 
 
 # 天气状况
@@ -72,29 +88,14 @@ def callback_menu(call):
         logger.error(e)
 
 
-# 文件类型
-@bot.message_handler(content_types=['audio', 'document', 'gif', 'photo', 'sticker', 'video', 'voice',
-                                    'game', 'video_note'])
-def send_file_message(message):
-    try:
-        msg_id = bot.send_message(message.chat.id, '😅不好意思， 霸霸还不会处理文件内容，请多多指教😅😅').message_id
-        bot.send_document(message.chat.id, message.document.file_id)
-        logger.info(message.chat)
-        timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
-        timer.start()
-    except Exception as e:
-        logger.error(e)
-
-
 # 段子笑话
 @bot.callback_query_handler(func=lambda call: call.data == '讲段子')
 def callback_menu(call):
     try:
-        logger.info(call.from_user)
         logger.info(call.data)
         callback_id = call.message.json['chat']['id']
         msg_id = bot.send_message(callback_id, get_joke()).message_id
-        timer = threading.Timer(60, bot.delete_message, (callback_id, msg_id))
+        timer = threading.Timer(300, bot.delete_message, (callback_id, msg_id))
         timer.start()
     except Exception as e:
         logger.error(e)
@@ -120,21 +121,23 @@ def callback_menu(call):
 @bot.message_handler(commands=['my_id'])
 def get_user_info(message):
     try:
-        logger.info(message.chat)
-        username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
+        logger.info(message.text)
+        nick_name = get_nickname(message)
         if message.from_user.username:
             msg_id = bot.send_message(message.chat.id,
-                                      "亲爱的❤️{}  ❤️你好\n你的 Chat_Id = {}\nUsername是 {} \n  5秒后自动删除！".format(username,
-                                                                                                         message.from_user.id,
-                                                                                                         message.from_user.username)).message_id
-            timer = threading.Timer(5, bot.delete_message, (message.chat.id, msg_id))
+                                      "亲爱的❤️{}  ❤️你好\n你的 Chat_Id = {}\nUsername是 {} \n"
+                                      "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面\n"
+                                      "  10秒后自动删除！\n".format(nick_name,
+                                                                                                          message.from_user.id,
+                                                                                                          message.from_user.username),parse_mode='Markdown').message_id
+            timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
             timer.start()
         else:
             msg_id = bot.send_message(message.chat.id,
-                                      "亲爱的 {} 你好\n你的 Chat_Id是 = {}\nUsername 还没设置 \n  5秒后自动删除！".format(
+                                      "亲爱的 {} 你好\n你的 Chat_Id是 = {}\nUsername 还没设置 \n  10秒后自动删除！".format(
                                           message.from_user.first_name,
                                           message.from_user.id)).message_id
-            timer = threading.Timer(5, bot.delete_message, (message.chat.id, msg_id))
+            timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
             timer.start()
 
     except Exception as e:
@@ -219,7 +222,10 @@ def execution_lottery(message):
         f = open('adminlist', 'r')
         l = f.read()
         if l.find('%s' % un) == -1:
-            msg_id = bot.reply_to(message, '您没有权限哦').message_id
+            msg_id = bot.send_message(message.chat.id,
+                             "你好:\n由于你权限不够还不能操作额\n"
+                             "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
+                             parse_mode='Markdown').message_id
             timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
             timer.start()
         else:
@@ -239,14 +245,20 @@ def del_lottery_list(message):
         l = f.read()
         if message.chat.type == 'private':
             if l.find('%s' % un) == -1:
-                bot.reply_to(message, '您没有权限哦')
+                bot.send_message(message.chat.id,
+                                           "你好:\n由于你权限不够还不能操作额\n"
+                                           "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
+                                           parse_mode='Markdown')
             else:
                 r = join.del_list()
                 bot.reply_to(message, r)
         else:
             if l.find('%s' % un) == -1:
-                msg_id = bot.reply_to(message, '您没有权限哦').message_id
-                timer = threading.Timer(5, bot.delete_message, (message.chat.id, msg_id))
+                msg_id = bot.send_message(message.chat.id,
+                                           "你好:\n由于你权限不够还不能操作额\n"
+                                           "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
+                                           parse_mode='Markdown').message_id
+                timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
                 timer.start()
             else:
                 r = join.del_list()
@@ -290,89 +302,34 @@ def execution_test_case(message):
             timer = threading.Timer(300, bot.delete_message, (message.chat.id, msg_id))
             timer.start()
         else:
-            msg_id = bot.reply_to(message, '您没有权限哦😂').message_id
-            timer = threading.Timer(5, bot.delete_message, (message.chat.id, msg_id))
+            msg_id = bot.send_message(message.chat.id,
+                                       "你好:\n由于你权限不够还不能操作额\n"
+                                       "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
+                                       parse_mode='Markdown').message_id
+            timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
             timer.start()
     except Exception as e:
         logger.error(e)
 
 
-# 查看是否漏单
-@bot.message_handler(commands=['cat_check_order_log'])
-def check_order_log(message):
-    try:
-        logger.info(message.chat)
-        with open('{}/{}'.format(CHECK_ORDER['log_path'], CHECK_ORDER['log_name']), 'rb')as f:
-            msg_id = bot.send_document(message.chat.id, data=f).message_id
-            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
-    except Exception as e:
-        logger.error(e)
-
-
-def creat_table():
-    """创建表"""
-    conncet = sqlite3.connect('telegram_user')
-    curs = conncet.cursor()
-    curs.execute(
-        "create table User_sign(id integer PRIMARY KEY AUTOINCREMENT,user_name varchar(255),chat_id int(11),is_sign int (1) default 1,time TIMESTAMP default (datetime('now','localtime')))")
-
-    curs.close()
-    conncet.close()
-
-
-# 插入数据库签到表
-def insert_sign(telegram_user_name, chat_id):
-    sql = "insert into User_sign(user_name,chat_id) values ('{}','{}');".format(
-        telegram_user_name, chat_id)
-    conn = sqlite3.connect('telegram_user')
-    cur = conn.cursor()
-    try:
-        cur.execute(sql)
-        conn.commit()
-        return cur.rowcount
-    except:
-        conn.rollback()
-    finally:
-        cur.close()
-        conn.close()
-
-
-# 查询累计签到
-def search_signs(chat_id):
-    sql = "SELECT COUNT(1) from User_sign WHERE chat_id =='{}';".format(chat_id)
-    conn = sqlite3.connect('telegram_user')
-    cur = conn.cursor()
-    try:
-        cur.execute(sql)
-        return cur.fetchone()[0]
-    except:
-        pass
-    finally:
-        cur.close()
-        conn.close()
-
-
-# 查询最后一次签到的时间
-def search_last_sign_time(chat_id):
-    sql = "SELECT time from User_sign WHERE chat_id ='{}' order by  id desc limit 1;".format(chat_id)
-    conn = sqlite3.connect('telegram_user')
-    cur = conn.cursor()
-    try:
-        cur.execute(sql)
-        return cur.fetchone()[0]
-    except:
-        pass
-    finally:
-        cur.close()
-        conn.close()
+# # 查看是否漏单
+# @bot.message_handler(commands=['cat_check_order_log'])
+# def check_order_log(message):
+#     try:
+#         logger.info(message.chat)
+#         with open('{}/{}'.format(CHECK_ORDER['log_path'], CHECK_ORDER['log_name']), 'rb')as f:
+#             msg_id = bot.send_document(message.chat.id, data=f).message_id
+#             timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+#             timer.start()
+#     except Exception as e:
+#         logger.error(e)
 
 
 @bot.message_handler(commands=['sign'])
 def user_sign(message):
     logger.info(message.chat)
     try:
-        username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
+        username = get_nickname(message)
         chat_id = message.from_user.id
         t = str(datetime.datetime.today()).split(' ')[0]
         t1 = search_last_sign_time(chat_id)
@@ -393,7 +350,7 @@ def user_sign(message):
 def user_status(message):
     try:
         logger.info(message.chat)
-        username = message.from_user.first_name if message.from_user.first_name else message.from_user.last_name
+        username =  get_nickname(message)
         chat_id = message.from_user.id
         num = search_signs(chat_id)
         msg_id = bot.reply_to(message, '{}:您总共签到:{} 次，很棒棒额，请再接再厉，20秒自毁以启动'.format(username, num)).message_id
