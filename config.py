@@ -2,6 +2,8 @@
 import os
 API_TOKEN = '837140525:AAERnzRfG9-Th1kz-3dsYaQ40cMXb5c8crQ'
 AUTO_PATH = os.path.abspath(os.path.join(os.getcwd(),'../Auto_Test/'))
+black_path = 'black_list'
+admin_path = 'admin_list'
 
 WORK_PATH = os.path.join(AUTO_PATH,'main')
 # 日志配置
