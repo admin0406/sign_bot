@@ -1,11 +1,10 @@
 # *--conding:utf-8--*
 import datetime
-import sqlite3
 import threading
-from config import API_TOKEN, URL, ENV_FILE_PATH, TEST_CASE, WORK_PATH, admin_path, black_path
+from config import API_TOKEN, URL, ENV_FILE_PATH, TEST_CASE, WORK_PATH, admin_path, black_path, CHECK_ORDER
 import telebot
-from telebot import types
-from logger import Logger
+from telebot import types, logger
+
 import requests
 import time
 import join, re
@@ -16,7 +15,6 @@ requests.adapters.DEFAULT_RETRIES = 5
 r = requests.session()
 r.keep_alive = False
 bot = telebot.TeleBot(token=API_TOKEN)
-logger = Logger().logger
 
 PATH = os.getcwd()
 
@@ -37,11 +35,12 @@ def is_black():
 @bot.message_handler(commands=['set_admin'], func=lambda msg: msg.reply_to_message)
 def set_admin(message):
     try:
+        logger.info(message.text)
         user_id = message.reply_to_message.from_user.id
         if str(message.from_user.id) in is_admin():
             if str(user_id) not in is_admin() and user_id != bot.get_me().id:
                 with open(admin_path, 'a', encoding='utf-8')as f:
-                    f.write('|' +str(user_id))
+                    f.write('|' + str(user_id))
                 bot.send_message(message.chat.id, '添加权限成功')
             else:
                 bot.send_message(message.chat.id, '如果本 `bot` 没猜错，此人已有超级权限，要不就是进了黑名单', parse_mode='Markdown')
@@ -69,6 +68,7 @@ def set_black_list(message):
             bot.send_message(message.chat.id, '如果本`bot` 没猜错 多半是你 权限不够，加油吧骚年', parse_mode='Markdown')
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 踢人
@@ -80,9 +80,10 @@ def ban_user(message):
         if str(message.from_user.id) in is_admin() and user_id not in is_admin() and user_id != bot.get_me().id:
             bot.kick_chat_member(message.chat.id, user_id)
         else:
-            bot.send_message(message.chat.id,'如果本`bot` 没猜错 多半是你 权限不够，加油吧骚年', parse_mode='Markdown')
+            bot.send_message(message.chat.id, '如果本`bot` 没猜错 多半是你 权限不够，加油吧骚年', parse_mode='Markdown')
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 开始导航
@@ -102,6 +103,7 @@ def handle_start(message):
         timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 进群欢迎信息
@@ -120,24 +122,23 @@ def say_welcom(message):
                                       "💋聪明`机智`能干`活泼`又机灵的小霸霸\n代表本群所有人热烈欢迎新成员: {} 加入大家庭\n🌺 کارب عزیز  🌺\n"
                                       "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面".format(
                                           nick_name), parse_mode='Markdown').message_id
-            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
 
         else:
             frist_name = message.left_chat_member.first_name
             last_name = message.left_chat_member.last_name
             if frist_name and last_name and frist_name != last_name:
-                nick_name = frist_name+last_name
+                nick_name = frist_name + last_name
             else:
-                nick_name=frist_name
+                nick_name = frist_name
             logger.info(message.left_chat_member)
             msg_id = bot.send_message(message.chat.id,
                                       '本群精英:{} 离开了我们团队，一路走好，恭喜发财！'.format(
                                           nick_name)).message_id
-            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
+        timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 天气状况
@@ -161,6 +162,7 @@ def callback_menu(call):
         timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 段子笑话
@@ -174,6 +176,7 @@ def callback_menu(call):
         timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 新闻资讯
@@ -206,18 +209,17 @@ def get_user_info(message):
                                                              message.from_user.id,
                                                              message.from_user.username),
                                       parse_mode='Markdown').message_id
-            timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
         else:
             msg_id = bot.send_message(message.chat.id,
                                       "亲爱的 {} 你好\n你的 Chat_Id是 = {}\nUsername 还没设置 \n  10秒后自动删除！".format(
                                           message.from_user.first_name,
                                           message.from_user.id)).message_id
-            timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
+        timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
 
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 获取游戏帮助
@@ -237,6 +239,7 @@ def get_help(message):
             timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 加入抽奖
@@ -256,6 +259,7 @@ def join_lottery(message):
             timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 查看抽奖名单
@@ -287,6 +291,7 @@ def send_list(message):
             timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 抽奖
@@ -309,18 +314,17 @@ def execution_lottery(message):
             bot.reply_to(message, r)
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 清空名单
 @bot.message_handler(commands=['clear_game_list'])
 def del_lottery_list(message):
     try:
-        un = message.from_user.username
+        un = str(message.from_user.id)
         logger.info(message.chat)
-        f = open('admin_list', 'r')
-        l = f.read()
         if message.chat.type == 'private':
-            if l.find('%s' % un) == -1:
+            if un not in is_admin():
                 bot.send_message(message.chat.id,
                                  "你好:\n由于你权限不够还不能操作额\n"
                                  "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
@@ -329,7 +333,7 @@ def del_lottery_list(message):
                 r = join.del_list()
                 bot.reply_to(message, r)
         else:
-            if l.find('%s' % un) == -1:
+            if un not in is_admin():
                 msg_id = bot.send_message(message.chat.id,
                                           "你好:\n由于你权限不够还不能操作额\n"
                                           "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
@@ -343,6 +347,7 @@ def del_lottery_list(message):
                 timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 # 执行测试用例
@@ -350,10 +355,8 @@ def del_lottery_list(message):
 def execution_test_case(message):
     try:
         logger.info(message.chat)
-        un = message.from_user.username
-        with open('admin_list', 'r')as f:
-            l = f.read()
-        if un and l.find(un) == 0:
+        user_id = str(message.from_user.id)
+        if user_id in is_admin():
             environment = re.search('execution_case_(.*)_over', message.text).group(1)
             if '_' in environment:
                 en = environment.split('_')[0]
@@ -386,19 +389,28 @@ def execution_test_case(message):
             timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
-# # 查看是否漏单
-# @bot.message_handler(commands=['cat_check_order_log'])
-# def check_order_log(message):
-#     try:
-#         logger.info(message.chat)
-#         with open('{}/{}'.format(CHECK_ORDER['log_path'], CHECK_ORDER['log_name']), 'rb')as f:
-#             msg_id = bot.send_document(message.chat.id, data=f).message_id
-#             timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-#             timer.start()
-#     except Exception as e:
-#         logger.error(e)
+# 查看是否漏单
+@bot.message_handler(commands=['cat_check_order_log'])
+def check_order_log(message):
+    try:
+        logger.info(message.chat)
+        if str(message.from_user.id) in is_admin():
+            with open('{}/{}'.format(CHECK_ORDER['log_path'], CHECK_ORDER['log_name']), 'rb')as f:
+                msg_id = bot.send_document(message.chat.id, data=f).message_id
+
+        else:
+            msg_id = bot.send_message(message.chat.id,
+                                      "你好:\n由于你权限不够还不能操作额\n"
+                                      "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面",
+                                      parse_mode='Markdown').message_id
+        timer = threading.Timer(10, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
+    except Exception as e:
+        logger.error(e)
+        pass
 
 
 @bot.message_handler(commands=['sign'])
@@ -411,15 +423,15 @@ def user_sign(message):
         t1 = search_last_sign_time(chat_id)
         if t1 and t == str(t1).split(' ')[0]:
             msg_id = bot.reply_to(message, '今日已签到,签到时间为:{} 请明天再来！20秒自毁以启动'.format(t1)).message_id
-            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
+
         else:
             insert_sign(username, chat_id)
             msg_id = bot.reply_to(message, '亲爱的 {} 恭喜你签到成功! 20秒自毁以启动'.format(username)).message_id
-            timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-            timer.start()
+        timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 @bot.message_handler(commands=['mystats'])
@@ -434,6 +446,7 @@ def user_status(message):
         timer.start()
     except Exception as e:
         logger.error(e)
+        pass
 
 
 def get_joke():

@@ -5,6 +5,7 @@ AUTO_PATH = os.path.abspath(os.path.join(os.getcwd(),'../Auto_Test/'))
 black_path = 'black_list'
 admin_path = 'admin_list'
 
+# 测试用例路径
 WORK_PATH = os.path.join(AUTO_PATH,'main')
 # 日志配置
 
@@ -25,7 +26,14 @@ URL = {
     # 请求新闻
     'news_details': 'http://www.mxnzp.com/api/news/details',
     # 天气
-    'weather_url': 'http://www.mxnzp.com/api/weather/current/深圳市'
+    'weather_url': 'http://www.mxnzp.com/api/weather/current/深圳市',
+    # 手机号查询
+    'phone_url':'http://api.guaqb.cn/api.php?sj=手机号',
+    # 苹果手机序列号查询
+    'iphone_key':'http://api.guaqb.cn/api.php?ios=序列号(如dnrpkbwbg5md)',
+    # 身份证查询
+    'id_card_search':'http://api.guaqb.cn/music/id/card.php?id= 15或18位身份证号',
+
 }
 
 # 测试用例结果路径

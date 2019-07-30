@@ -81,3 +81,34 @@
 2019-07-28 14:01:03,804 -- telegram_bot.log -- main.py -- 227 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': None, 'id': -1001299109373, 'title': 'ddd', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
 2019-07-28 14:02:21,185 -- telegram_bot.log -- main.py -- 227 -- INFO -- {'type': 'private', 'last_name': 'bibo', 'first_name': 'bibo', 'username': 'bibo_dear', 'id': 631099108, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
 2019-07-28 14:02:36,351 -- telegram_bot.log -- main.py -- 227 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': None, 'id': -1001299109373, 'title': 'ddd', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-28 14:31:25,268 -- telegram_bot.log -- main.py -- 118 -- INFO -- {'id': 938619629, 'is_bot': True, 'first_name': '大黄蜂', 'username': 'Bibo_dear2_bot', 'last_name': None, 'language_code': None}
+2019-07-28 14:32:04,794 -- telegram_bot.log -- main.py -- 78 -- INFO -- /ban
+2019-07-28 14:32:19,095 -- telegram_bot.log -- main.py -- 133 -- INFO -- {'id': 837140525, 'is_bot': True, 'first_name': '我就是灭霸', 'username': 'Bibo_dear_bot', 'last_name': None, 'language_code': None}
+2019-07-28 14:32:19,390 -- telegram_bot.log -- main.py -- 140 -- ERROR -- A request to the Telegram API was unsuccessful. The server returned HTTP 403 Forbidden. Response body:
+[b'{"ok":false,"error_code":403,"description":"Forbidden: bot was kicked from the supergroup chat"}']
+2019-07-28 14:39:37,042 -- telegram_bot.log -- main.py -- 58 -- INFO -- /set_black
+2019-07-28 14:39:54,998 -- telegram_bot.log -- main.py -- 78 -- INFO -- /ban
+2019-07-28 14:39:55,905 -- telegram_bot.log -- main.py -- 133 -- INFO -- {'id': 938831401, 'is_bot': False, 'first_name': 'bsjsj', 'username': 'bobiwang', 'last_name': '双手', 'language_code': 'zh-hans'}
+2019-07-28 14:43:55,267 -- telegram_bot.log -- main.py -- 352 -- INFO -- {'type': 'private', 'last_name': 'bibo', 'first_name': 'bibo', 'username': 'bibo_dear', 'id': 631099108, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-28 14:52:15,745 -- telegram_bot.log -- main.py -- 352 -- INFO -- {'type': 'private', 'last_name': 'bibo', 'first_name': 'bibo', 'username': 'bibo_dear', 'id': 631099108, 'title': None, 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-28 14:53:38,959 -- telegram_bot.log -- main.py -- 352 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': 'software_tester', 'id': -1001406694070, 'title': '软件测试 test QA', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-28 14:56:19,414 -- telegram_bot.log -- main.py -- 352 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': 'software_tester', 'id': -1001406694070, 'title': '软件测试 test QA', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-28 14:58:31,390 -- telegram_bot.log -- main.py -- 78 -- INFO -- /ban
+2019-07-28 14:58:45,940 -- telegram_bot.log -- main.py -- 58 -- INFO -- /set_black
+2019-07-29 09:40:04,780 -- telegram_bot.log -- main.py -- 199 -- INFO -- /my_id@Bibo_dear_bot
+2019-07-29 09:40:10,082 -- telegram_bot.log -- main.py -- 404 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': 'software_tester', 'id': -1001406694070, 'title': '软件测试 test QA', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-29 09:40:13,649 -- telegram_bot.log -- main.py -- 404 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': 'software_tester', 'id': -1001406694070, 'title': '软件测试 test QA', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-29 09:40:26,722 -- telegram_bot.log -- main.py -- 265 -- INFO -- {'type': 'supergroup', 'last_name': None, 'first_name': None, 'username': 'software_tester', 'id': -1001406694070, 'title': '软件测试 test QA', 'all_members_are_administrators': None, 'photo': None, 'description': None, 'invite_link': None, 'pinned_message': None, 'sticker_set_name': None, 'can_set_sticker_set': None}
+2019-07-29 09:41:24,735 -- telegram_bot.log -- main.py -- 118 -- INFO -- {'id': 572359951, 'is_bot': False, 'first_name': 'even', 'username': None, 'last_name': None, 'language_code': None}
+2019-07-29 09:57:03,694 -- telegram_bot.log -- main.py -- 118 -- INFO -- {'id': 938831401, 'is_bot': False, 'first_name': 'bsjsj', 'username': 'bobiwang', 'last_name': '双手', 'language_code': 'zh-hans'}
+2019-07-29 09:58:15,209 -- telegram_bot.log -- main.py -- 118 -- INFO -- {'id': 938831401, 'is_bot': False, 'first_name': 'mrschen', 'username': 'bobiwang', 'last_name': None, 'language_code': 'zh-hans'}
+2019-07-29 11:26:49,663 -- telegram_bot.log -- main.py -- 78 -- INFO -- /ban
+2019-07-29 11:26:51,564 -- telegram_bot.log -- main.py -- 85 -- ERROR -- A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: user is an administrator of the chat"}']
+2019-07-29 11:27:10,278 -- telegram_bot.log -- main.py -- 58 -- INFO -- /set_black
+2019-07-29 11:27:12,042 -- telegram_bot.log -- main.py -- 71 -- ERROR -- A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: can\'t demote chat creator"}']
+2019-07-29 11:27:27,242 -- telegram_bot.log -- main.py -- 199 -- INFO -- /my_id@Bibo_dear_bot
+2019-07-29 11:27:43,619 -- telegram_bot.log -- main.py -- 58 -- INFO -- /set_black
+2019-07-29 11:28:02,436 -- telegram_bot.log -- main.py -- 78 -- INFO -- /ban
+2019-07-29 11:28:03,374 -- telegram_bot.log -- main.py -- 133 -- INFO -- {'id': 690205361, 'is_bot': False, 'first_name': 'voniry', 'username': 'xiaobubu0406', 'last_name': 'chen', 'language_code': 'zh-hans'}
