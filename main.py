@@ -81,61 +81,7 @@ def ban_user(message):
             bot.kick_chat_member(message.chat.id, user_id)
         else:
             bot.send_message(message.chat.id, '如果本`bot` 没猜错 多半是你 权限不够，加油吧骚年', parse_mode='Markdown')
-    except Exception as e:
-        logger.error(e)
-        pass
-
-
-# 开始导航
-@bot.message_handler(commands=['start'])
-def handle_start(message):
-    try:
-        keyboard = types.InlineKeyboardMarkup()
-        callback_button_menu = types.InlineKeyboardButton(text="讲段子", callback_data="讲段子", )
-        callback_button_song = types.InlineKeyboardButton(text='天气状况', callback_data='天气状况')
-        # callback_button_news = types.InlineKeyboardButton(text='今日新闻', callback_data='今日新闻')
-        callback_button_phones = types.InlineKeyboardButton(text='电话簿',
-                                                            url='https://www.feituan.ph/index.php?cid=&ccid=9')
-        # callback_button_cars = types.InlineKeyboardButton(text='日常修车', url='t.me/openporn')
-        keyboard.add(callback_button_menu, callback_button_song, callback_button_phones, )
-        msg_id = bot.send_message(message.chat.id, "欢迎使用自助机器人!", reply_markup=keyboard).message_id
-        timer = threading.Timer(30, bot.delete_message, (message.chat.id, msg_id))
-        timer.start()
-    except Exception as e:
-        logger.error(e)
-        pass
-
-
-# 进群欢迎信息
-@bot.message_handler(content_types=['new_chat_members', 'left_chat_member'])
-def say_welcom(message):
-    try:
-        if message.new_chat_members:
-            frist_name = message.new_chat_member.first_name
-            last_name = message.new_chat_member.last_name
-            if frist_name and last_name and frist_name != last_name:
-                nick_name = frist_name + last_name
-            else:
-                nick_name = frist_name
-            logger.info(message.new_chat_member)
-            msg_id = bot.send_message(message.chat.id,
-                                      "💋聪明`机智`能干`活泼`又机灵的小霸霸\n代表本群所有人热烈欢迎新成员: {} 加入大家庭\n🌺 کارب عزیز  🌺\n"
-                                      "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面".format(
-                                          nick_name), parse_mode='Markdown').message_id
-
-        else:
-            frist_name = message.left_chat_member.first_name
-            last_name = message.left_chat_member.last_name
-            if frist_name and last_name and frist_name != last_name:
-                nick_name = frist_name + last_name
-            else:
-                nick_name = frist_name
-            logger.info(message.left_chat_member)
-            msg_id = bot.send_message(message.chat.id,
-                                      '本群精英:{} 离开了我们团队，一路走好，恭喜发财！'.format(
-                                          nick_name)).message_id
-        timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
-        timer.start()
+            bot.send_audio()
     except Exception as e:
         logger.error(e)
         pass
@@ -193,6 +139,80 @@ def callback_menu(call):
         timer.start()
     except Exception as e:
         logger.error(e)
+
+
+# 汇率查询
+@bot.message_handler(commands=['search_exchange'])
+def exchange(message):
+    try:
+        logger.info(message.chat)
+        content = get_exchange()
+        bot.send_message(message.chat.id, content)
+    except Exception as e:
+        logger.error(e)
+        pass
+
+
+def get_exchange():
+    url = URL['exchange']
+    res = r.get(url)
+    if res.status_code == 200:
+        return '今日汇率:{}\n 更新时间:{}'.format(res.json()['result']['rate'], res.json()['result']['updatetime'])
+
+
+# 开始导航
+@bot.message_handler(commands=['start'])
+def handle_start(message):
+    try:
+        keyboard = types.InlineKeyboardMarkup()
+        callback_button_menu = types.InlineKeyboardButton(text="讲段子", callback_data="讲段子", )
+        callback_button_song = types.InlineKeyboardButton(text='天气状况', callback_data='天气状况')
+        # callback_button_news = types.InlineKeyboardButton(text='今日新闻', callback_data='今日新闻')
+        callback_button_phones = types.InlineKeyboardButton(text='电话簿',
+                                                            url='https://www.feituan.ph/index.php?cid=&ccid=9')
+        # callback_button_cars = types.InlineKeyboardButton(text='日常修车', url='t.me/openporn')
+        keyboard.add(callback_button_menu, callback_button_song, callback_button_phones, )
+        msg_id = bot.send_message(message.chat.id, "欢迎使用自助机器人!", reply_markup=keyboard).message_id
+        timer = threading.Timer(30, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
+    except Exception as e:
+        logger.error(e)
+        pass
+
+
+# 进群欢迎信息
+@bot.message_handler(content_types=['new_chat_members', 'left_chat_member'])
+def say_welcom(message):
+    try:
+        if message.new_chat_members:
+            frist_name = message.new_chat_member.first_name
+            last_name = message.new_chat_member.last_name
+            if frist_name and last_name and frist_name != last_name:
+                nick_name = frist_name + last_name
+            else:
+                nick_name = frist_name
+            logger.info(message.new_chat_member)
+            msg_id = bot.send_message(message.chat.id,
+                                      "💋聪明`机智`能干`活泼`又机灵的小霸霸\n代表本群所有人热烈欢迎新成员: {} 加入大家庭\n🌺 کارب عزیز  🌺\n"
+                                      "你可以把本[bot](t.me/@Bibo_dear_bot)加到[你的群组](t.me/YoutubeChannelsBot?startgroup=true)里面".format(
+                                          nick_name), parse_mode='Markdown').message_id
+
+        else:
+            frist_name = message.left_chat_member.first_name
+            last_name = message.left_chat_member.last_name
+            if frist_name and last_name and frist_name != last_name:
+                nick_name = frist_name + last_name
+            else:
+                nick_name = frist_name
+            logger.info(message.left_chat_member)
+            msg_id = bot.send_message(message.chat.id,
+                                      '本群精英:{} 离开了我们团队，一路走好，恭喜发财！'.format(
+                                          nick_name)).message_id
+        timer = threading.Timer(20, bot.delete_message, (message.chat.id, msg_id))
+        timer.start()
+    except Exception as e:
+        logger.error(e)
+        pass
 
 
 # 查看个人信息
@@ -413,6 +433,7 @@ def check_order_log(message):
         pass
 
 
+# 签到
 @bot.message_handler(commands=['sign'])
 def user_sign(message):
     logger.info(message.chat)
@@ -434,6 +455,7 @@ def user_sign(message):
         pass
 
 
+# 查看我的签到
 @bot.message_handler(commands=['mystats'])
 def user_status(message):
     try:
